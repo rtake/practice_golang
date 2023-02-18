@@ -13,8 +13,7 @@ type Result struct {
   t float64
 }
 
-func startGame(length, num int) ([]Result) {
-  var res []Result
+func startGame(length, num int) (res []Result) {
   var str string
 
   rand.Seed(time.Now().UnixNano())
@@ -67,8 +66,9 @@ func disp(arrslice [26][]float64, key string) {
     } else {
       for _, v := range arrslice[i] {
         fmt.Printf(",%.3f", v)
-        fmt.Printf("\n")
       }
+
+      fmt.Printf("\n")
     }
 
   }
@@ -89,5 +89,17 @@ func main() {
   }
 
   disp(arrslice, "all")
+
+  /*
+  for i:=0;i<26;i++ {
+    sum := float64(0)
+
+    for j:=0;j<len(arrslice[i]);j++{
+      sum = sum + arrslice[i][j]
+    }
+
+    fmt.Println(sum/float64(len(arrslice[i])))
+  }
+  */
 
 }
