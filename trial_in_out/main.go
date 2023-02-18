@@ -13,28 +13,6 @@ type Result struct {
   t float64
 }
 
-/*
-type Score struct {
-  c rune
-  t float64
-}
-
-type Scores []Score
-
-func (ss Scores) Len() int {
-  return len(ss)
-}
-
-func (ss Scores) Swap(i, j int) {
-  ss[i], ss[j] = ss[j], ss[i]
-}
-
-func (ss Scores) Less(i, j int) bool {
-  // return ss[i].t < ss[j].t
-  return ss[i].t > ss[j].t
-}
-*/
-
 func startGame(length, num int) ([]Result) {
   var res []Result
   var str string
@@ -107,34 +85,4 @@ func main() {
     fmt.Printf("\n")
   }
 
-  /*
-  m := make(map[rune]float64, 10)
-
-  for _, v := range res {
-    for _, c := range v.word {
-      val, isThere := m[c]
-
-      if isThere {
-        m[c] = math.Min(val, v.t)
-      } else {
-	m[c] = v.t
-      }
-    }
-
-    fmt.Printf("%s %.3fs\n", v.word, v.t)
-  }
-
-
-  var ss Scores
-
-  for k, v := range m {
-    ss = append(ss, Score{k, v})
-  }
-
-  sort.Sort(ss)
-
-  for _, r := range ss {
-    fmt.Printf("%s %.3fs\n", string(r.c), r.t)
-  }
-  */
 }
