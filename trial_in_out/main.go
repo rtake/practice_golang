@@ -49,6 +49,31 @@ func startGame(length, num int) ([]Result) {
   return res
 }
 
+
+func disp(arrslice [26][]float64, key string) {
+  for i:= 0;i<26;i++ {
+    if len(arrslice[i]) == 0 {
+      arrslice[i] = append(arrslice[i], 0)
+    }
+
+    fmt.Printf("%s", string(rune(i+'a')))
+
+    sort.Float64s(arrslice[i])
+
+
+    if key == "max" {
+      fmt.Printf(" %.3f", arrslice[i][0])
+      fmt.Printf("\n")
+    } else {
+      for _, v := range arrslice[i] {
+        fmt.Printf(",%.3f", v)
+        fmt.Printf("\n")
+      }
+    }
+
+  }
+}
+
 func main() {
   length := 5
   num := 3
@@ -63,26 +88,6 @@ func main() {
     }
   }
 
-  for i:= 0;i<26;i++ {
-    if len(arrslice[i]) == 0 {
-      arrslice[i] = append(arrslice[i], 0)
-    }
-
-    fmt.Printf("%s", string(rune(i+'a')))
-
-    sort.Float64s(arrslice[i])
-
-    // All elements
-    for _, v := range arrslice[i] {
-      fmt.Printf(",%.3f", v)
-    }
-
-    // Max
-    /*
-    fmt.Printf(" %.3f", arrslice[i][0])
-    */
-
-    fmt.Printf("\n")
-  }
+  disp(arrslice, "all")
 
 }
