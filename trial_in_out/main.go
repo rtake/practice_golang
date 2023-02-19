@@ -2,8 +2,11 @@ package main
 
 import (
 	"fmt"
-	"time"
 	"math/rand"
+	"os"
+	"strings"
+	"time"
+	"strconv"
 )
 
 type Result struct {
@@ -12,7 +15,7 @@ type Result struct {
 }
 
 // func startGame(length, num int) (res []Result) {
-func startGame(length, num int) (arrslice [26][]float64) {
+func startGame(length, num int, arrslice [26][]float64) ([26][]float64) {
   var str string
   var res []Result
 
@@ -53,17 +56,69 @@ func startGame(length, num int) (arrslice [26][]float64) {
     }
   }
 
+  return arrslice
+}
+
+func writefile(arrslice [26][]float64) {
+  f, _ := os.Create("result.txt")
+
+  var str string
+
+  for i:=0;i<26;i++{
+    for _, v := range arrslice[i]{
+      str = str + fmt.Sprintf("%s,%f\n", string('a'+i), v)
+    }
+  }
+
+  data := []byte(str)
+  _, _ = f.Write(data)
+
+  return 
+}
+
+func readfile() (arrslice [26][]float64) {
+  f, _ := os.Open("result.txt")
+
+  data := make([]byte, 1024)
+  cnt, err := f.Read(data)
+  if err != nil {
+    fmt.Println(err)
+    fmt.Println("fail to read file")
+  }
+
+  data = data[:cnt]
+  str := string(data)
+
+  arr := strings.Split(str, "\n")
+
+  for _, v := range arr{
+    s := strings.Split(v, ",")
+
+    if len(s) < 2 {
+      break
+    }
+
+    // fmt.Println(s[0],s[1])
+
+    r := []rune(s[0])
+    idx := int(r[0]-'a')
+    val, _ := strconv.ParseFloat(s[1], 64)
+    arrslice[idx] = append(arrslice[idx], val)
+  }
+
   return
 }
 
 func main() {
+  arrslice := readfile()
+
   length := 4
   num := 3
-
-  arrslice := startGame(length, num)
+  arrslice = startGame(length, num, arrslice)
 
   Disp(arrslice, "all")
-
   // CalcAverage(arrslice)
+
+  writefile(arrslice)
 
 }
