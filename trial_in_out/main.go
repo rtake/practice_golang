@@ -74,8 +74,27 @@ func disp(arrslice [26][]float64, key string) {
   }
 }
 
+func CalcAverage(arrslice [26][]float64) (avearr [26]float64) {
+
+  for i:=0;i<26;i++ {
+    sum := float64(0)
+
+    for j:=0;j<len(arrslice[i]);j++{
+      sum = sum + arrslice[i][j]
+    }
+
+    if len(arrslice[i]) == 0 {
+      avearr[i] = 0
+    } else {
+      avearr[i] = sum/float64(len(arrslice[i]))
+    }
+  }
+
+  return 
+}
+
 func main() {
-  length := 5
+  length := 4
   num := 3
   res := startGame(length, num)
 
@@ -90,16 +109,9 @@ func main() {
 
   disp(arrslice, "all")
 
-  /*
+  avearr := CalcAverage(arrslice)
   for i:=0;i<26;i++ {
-    sum := float64(0)
-
-    for j:=0;j<len(arrslice[i]);j++{
-      sum = sum + arrslice[i][j]
-    }
-
-    fmt.Println(sum/float64(len(arrslice[i])))
+    fmt.Printf("%s %fs\n", string('a'+i), avearr[i])
   }
-  */
 
 }
