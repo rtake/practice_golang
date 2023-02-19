@@ -2,8 +2,6 @@ package main
 
 import (
 	"fmt"
-	// "math"
-	"sort"
 	"time"
 	"math/rand"
 )
@@ -13,8 +11,10 @@ type Result struct {
   t float64
 }
 
-func startGame(length, num int) (res []Result) {
+// func startGame(length, num int) (res []Result) {
+func startGame(length, num int) (arrslice [26][]float64) {
   var str string
+  var res []Result
 
   rand.Seed(time.Now().UnixNano())
 
@@ -45,60 +45,6 @@ func startGame(length, num int) (res []Result) {
     }
   }
 
-  return res
-}
-
-
-func disp(arrslice [26][]float64, key string) {
-  for i:= 0;i<26;i++ {
-    if len(arrslice[i]) == 0 {
-      arrslice[i] = append(arrslice[i], 0)
-    }
-
-    fmt.Printf("%s", string(rune(i+'a')))
-
-    sort.Float64s(arrslice[i])
-
-
-    if key == "max" {
-      fmt.Printf(" %.3f", arrslice[i][0])
-      fmt.Printf("\n")
-    } else {
-      for _, v := range arrslice[i] {
-        fmt.Printf(",%.3f", v)
-      }
-
-      fmt.Printf("\n")
-    }
-
-  }
-}
-
-func CalcAverage(arrslice [26][]float64) (avearr [26]float64) {
-
-  for i:=0;i<26;i++ {
-    sum := float64(0)
-
-    for j:=0;j<len(arrslice[i]);j++{
-      sum = sum + arrslice[i][j]
-    }
-
-    if len(arrslice[i]) == 0 {
-      avearr[i] = 0
-    } else {
-      avearr[i] = sum/float64(len(arrslice[i]))
-    }
-  }
-
-  return 
-}
-
-func main() {
-  length := 4
-  num := 3
-  res := startGame(length, num)
-
-  var arrslice [26][]float64
 
   for _, r := range res {
     for _, c := range r.word {
@@ -107,11 +53,17 @@ func main() {
     }
   }
 
-  disp(arrslice, "all")
+  return
+}
 
-  avearr := CalcAverage(arrslice)
-  for i:=0;i<26;i++ {
-    fmt.Printf("%s %fs\n", string('a'+i), avearr[i])
-  }
+func main() {
+  length := 4
+  num := 3
+
+  arrslice := startGame(length, num)
+
+  Disp(arrslice, "all")
+
+  // CalcAverage(arrslice)
 
 }
