@@ -6,6 +6,8 @@ import (
 )
 
 func Disp(arrslice [26][]float64, key string) {
+  fmt.Println("===== Result =====")
+
   for i:= 0;i<26;i++ {
     if len(arrslice[i]) == 0 {
       arrslice[i] = append(arrslice[i], 0)
@@ -28,5 +30,7 @@ func Disp(arrslice [26][]float64, key string) {
     }
 
   }
+
+  fmt.Println("==================")
 }
 

@@ -3,10 +3,8 @@ package main
 import (
 	"fmt"
 	"math/rand"
-	"os"
-	"strings"
 	"time"
-	"strconv"
+	"sort"
 )
 
 type Result struct {
@@ -59,65 +57,54 @@ func startGame(length, num int, arrslice [26][]float64) ([26][]float64) {
   return arrslice
 }
 
-func writefile(arrslice [26][]float64) {
-  f, _ := os.Create("result.txt")
-
-  var str string
-
-  for i:=0;i<26;i++{
-    for _, v := range arrslice[i]{
-      str = str + fmt.Sprintf("%s,%f\n", string('a'+i), v)
-    }
-  }
-
-  data := []byte(str)
-  _, _ = f.Write(data)
-
-  return 
+type Word struct {
+  r rune
+  f float64
 }
 
-func readfile() (arrslice [26][]float64) {
-  f, _ := os.Open("result.txt")
+/*
+type Words []Word
 
-  data := make([]byte, 1024)
-  cnt, err := f.Read(data)
-  if err != nil {
-    fmt.Println(err)
-    fmt.Println("fail to read file")
-  }
-
-  data = data[:cnt]
-  str := string(data)
-
-  arr := strings.Split(str, "\n")
-
-  for _, v := range arr{
-    s := strings.Split(v, ",")
-
-    if len(s) < 2 {
-      break
-    }
-
-    // fmt.Println(s[0],s[1])
-
-    r := []rune(s[0])
-    idx := int(r[0]-'a')
-    val, _ := strconv.ParseFloat(s[1], 64)
-    arrslice[idx] = append(arrslice[idx], val)
-  }
-
-  return
+func (ww Words) Len() int {
+  return len(ww)
 }
+
+func (ww Words) Swap(i, j int) {
+  ww[i], ww[j] = ww[j], ww[i]
+}
+
+func (ww Words) Less (i,j int) bool {
+  return ww[i].f < ww[j].f
+}
+*/
 
 func main() {
   arrslice := readfile()
 
+  ///*
   length := 4
   num := 3
   arrslice = startGame(length, num, arrslice)
 
   Disp(arrslice, "all")
-  // CalcAverage(arrslice)
+  //*/
+
+  arr := CalcAverage(arrslice)
+
+  var ww [26]Word
+  for i:=0;i<26;i++{
+    ww[i].r = rune(i+'a')
+    ww[i].f = arr[i]
+  }
+
+  sort.Slice(ww[:], func(i, j int) bool {
+    // return ww[i].f < ww[j].f
+    return ww[i].f > ww[j].f
+  })
+
+  for i:=0;i<26;i++{
+    fmt.Printf("%s,%.3fs\n", string(ww[i].r), ww[i].f)
+  }
 
   writefile(arrslice)
 

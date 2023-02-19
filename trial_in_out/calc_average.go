@@ -1,11 +1,9 @@
 package main
 
 import (
-	"fmt"
 )
 
 func CalcAverage(arrslice [26][]float64) (avearr [26]float64) {
-
   for i:=0;i<26;i++ {
     sum := float64(0)
 
@@ -20,9 +18,11 @@ func CalcAverage(arrslice [26][]float64) (avearr [26]float64) {
     }
   }
 
+  /*
   for i:=0;i<26;i++ {
     fmt.Printf("%s %.3f s\n", string('a'+i), avearr[i])
   }
+  */
 
   return 
 }
